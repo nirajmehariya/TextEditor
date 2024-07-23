@@ -1,0 +1,54 @@
+.app {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.toolbar {
+  border: 1px solid #ccc;
+  padding: 8px;
+  display: flex;
+  gap: 24px;
+  height: 5vh;
+  width: calc(100% - 45px);
+  position: fixed;
+  top: 0;
+  left: 20px;
+  background-color: white;
+  z-index: 1000;
+}
+
+.editor {
+  border: 1px solid #ccc;
+  padding: 8px;
+  height: calc(100vh - 5vh - 20px);
+  width: calc(100% - 45px);
+  outline: none;
+  margin-top: 15px;
+  position: fixed;
+  top: 5vh;
+  left: 20px;
+  background-color: #fff;
+  overflow-y: auto;
+  color: black;
+}
+
+.toolbar button,
+.toolbar select,
+.toolbar input[type="color"] {
+  padding: 5px;
+  font-size: 14px;
+  background-color: rgb(255, 251, 251);
+  color: black;
+  border: none;
+  cursor: pointer;
+}
+
+.toolbar button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input[type="file"] {
+  display: none;
+}
