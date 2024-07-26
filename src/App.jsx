@@ -9,6 +9,9 @@ const App = () => {
     useState("#ffffff"); // Default background color
   const [fonts, setFonts] = useState([]);
   const [backgroundMode, setBackgroundMode] = useState("default"); // Track background mode
+  const [toolbarBackgroundColor, setToolbarBackgroundColor] =
+    useState("#ffffff"); // Default toolbar background color
+  const [toolbarTextColor, setToolbarTextColor] = useState("#000000"); // Default toolbar text color
 
   useEffect(() => {
     // Fetch fonts from Font Library API
@@ -96,22 +99,49 @@ const App = () => {
   const handleBackgroundColorChange = (e) => {
     const value = e.target.value;
     let backgroundColor = "#ffffff"; // Default
+    let toolbarBgColor = "#ffffff"; // Default toolbar background color
+    let toolbarTxtColor = "#000000"; // Default toolbar text color
+    let textColor = "#000000"; // Default text color
+
     if (value === "light") {
       backgroundColor = "#f0f0f0";
+      toolbarBgColor = "#f0f0f0";
+      toolbarTxtColor = "#000000";
+      textColor = "#000000";
     } else if (value === "dark") {
       backgroundColor = "#333333";
+      toolbarBgColor = "#333333";
+      toolbarTxtColor = "#ffffff";
+      textColor = "#ffffff"; // Change text color to white for dark mode
     } else if (value === "default") {
       backgroundColor = "#ffffff";
+      toolbarBgColor = "#ffffff";
+      toolbarTxtColor = "#000000";
+      textColor = "#000000";
     } else {
       backgroundColor = value;
+      toolbarBgColor = value;
+      toolbarTxtColor = "#000000";
+      textColor = "#000000";
     }
+
     setCurrentBackgroundColor(backgroundColor);
+    setToolbarBackgroundColor(toolbarBgColor);
+    setToolbarTextColor(toolbarTxtColor);
+    setCurrentColor(textColor);
     editorRef.current.style.backgroundColor = backgroundColor;
+    editorRef.current.style.color = textColor;
   };
 
   return (
     <div className="app">
-      <div className="toolbar">
+      <div
+        className="toolbar"
+        style={{
+          backgroundColor: toolbarBackgroundColor,
+          color: toolbarTextColor,
+        }}
+      >
         <select onChange={(e) => execCommand("formatBlock", e.target.value)}>
           <option value="div">Normal</option>
           <option value="h1">Heading 1</option>
@@ -232,11 +262,7 @@ const App = () => {
         {backgroundMode === "custom" && (
           <input
             type="color"
-            onChange={(e) => {
-              setCurrentBackgroundColor(e.target.value);
-              editorRef.current.style.backgroundColor = e.target.value;
-            }}
-            value={currentBackgroundColor}
+            onChange={(e) => handleBackgroundColorChange(e)}
           />
         )}
       </div>
