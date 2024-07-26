@@ -7,7 +7,7 @@
   border: 1px solid #ccc;
   padding: 8px;
   display: flex;
-  gap: 24px;
+  gap: 20px;
   height: 5vh;
   width: calc(100% - 45px);
   position: fixed;
@@ -27,7 +27,7 @@
   position: fixed;
   top: 5vh;
   left: 20px;
-  background-color: #fff;
+  background-color: #ffffff;
   overflow-y: auto;
   color: black;
 }

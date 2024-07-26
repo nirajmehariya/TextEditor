@@ -8,6 +8,7 @@ const App = () => {
   const [currentBackgroundColor, setCurrentBackgroundColor] =
     useState("#ffffff"); // Default background color
   const [fonts, setFonts] = useState([]);
+  const [backgroundMode, setBackgroundMode] = useState("default"); // Track background mode
 
   useEffect(() => {
     // Fetch fonts from Font Library API
@@ -90,6 +91,22 @@ const App = () => {
     a.download = "document.html";
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  const handleBackgroundColorChange = (e) => {
+    const value = e.target.value;
+    let backgroundColor = "#ffffff"; // Default
+    if (value === "light") {
+      backgroundColor = "#f0f0f0";
+    } else if (value === "dark") {
+      backgroundColor = "#333333";
+    } else if (value === "default") {
+      backgroundColor = "#ffffff";
+    } else {
+      backgroundColor = value;
+    }
+    setCurrentBackgroundColor(backgroundColor);
+    editorRef.current.style.backgroundColor = backgroundColor;
   };
 
   return (
@@ -200,12 +217,35 @@ const App = () => {
         <button onClick={downloadContent}>
           <i className="fas fa-download"></i>
         </button>
+        <select
+          onChange={(e) => {
+            const value = e.target.value;
+            setBackgroundMode(value);
+            handleBackgroundColorChange(e);
+          }}
+        >
+          <option value="default">Default</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="custom">Custom Color</option>
+        </select>
+        {backgroundMode === "custom" && (
+          <input
+            type="color"
+            onChange={(e) => {
+              setCurrentBackgroundColor(e.target.value);
+              editorRef.current.style.backgroundColor = e.target.value;
+            }}
+            value={currentBackgroundColor}
+          />
+        )}
       </div>
       <div
         ref={editorRef}
         className="editor"
         contentEditable
         suppressContentEditableWarning
+        style={{ backgroundColor: currentBackgroundColor, color: currentColor }}
       ></div>
     </div>
   );
